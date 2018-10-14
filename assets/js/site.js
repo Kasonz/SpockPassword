@@ -124,9 +124,10 @@ Array.prototype.remove = function () {
   return this;
 };
 
-function generatePassword(length, up_on, low_on, num_on, sym_on, sim_off) {
+function generatePassword(length, up_on, low_on, beginletter_on, num_on, csym_on, ucsymb_on, sim_off) {
   var characters = [];
-  var symbols = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', '{', ']', '}', '\\', '|', ';', ':', '\'', '"', ',', '<', '.', '>', '/', '?'];
+  var csymbols = ['-', '_', '=', '+', '!', '@', '#', '$', '%', '?', '&', '*', '(', ')', ',', '<', '>', ';', ':', '.'];
+  var ucsymbols = ['`', '~', '^', '[', '{', ']', '}', '\\', '|', '\'', '"', '/'];
   var similars = ['1', 'i', 'l', 'I', '0', 'O', 'o', '|'];
   var uppers = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
   var lowers = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
@@ -137,11 +138,15 @@ function generatePassword(length, up_on, low_on, num_on, sym_on, sim_off) {
   if (low_on == true) {
     characters = characters.concat(lowers);
   }
+
   if (num_on == true) {
     characters = characters.concat(numbers);
   }
-  if (sym_on == true) {
-    characters = characters.concat(symbols);
+  if (csym_on == true) {
+    characters = characters.concat(csymbols);
+  }
+  if (ucsymb_on == true) {
+    characters = characters.concat(ucsymbols);
   }
   if (sim_off == true) {
     for (var i = 0; i < similars.length; i++) {
@@ -149,21 +154,46 @@ function generatePassword(length, up_on, low_on, num_on, sym_on, sim_off) {
     }
   }
 
-  // Generate Password
-  var password = "";
+
+  if (beginletter_on) {
+
+    length = length - 1;
+
+    var arrLetter = [];
+    arrLetter = arrLetter.concat(uppers, lowers);
+
+    var rand = arrLetter[Math.floor(Math.random() * arrLetter.length)];
+    password = rand;
+  } else {
+
+    // Generate Password
+    password = "";
+  }
+
   for (var j = 0; j < length; j++) {
     var index = Math.floor((Math.random() * characters.length) + 0);
     password = password + characters[index];
   }
-  // debug
-  console.log(characters.length);
+
 
   return password;
 }
 
+
 $('#generate').click(function (e) {
   e.preventDefault();
   newPass();
+});
+
+
+$('.quick a').click(function (e) {
+
+  var text = this.text;
+
+  var thenum = text.match(/\d+$/)[0];
+
+  $("#passwordLength").val(thenum);
+  
 });
 
 function newPass() {
@@ -171,7 +201,8 @@ function newPass() {
     up = false,
     low = false,
     num = false,
-    symb = false,
+    csymb = false,
+    ucsymb=false,
     sim = false;
   if ($('#uppercase').prop("checked") == true) {
     up = true;
@@ -179,14 +210,35 @@ function newPass() {
   if ($('#lowercase').prop("checked") == true) {
     low = true;
   }
+  if ($('#begin-letter').prop("checked") == true) {
+    beginletter_on = true;
+  }
   if ($('#numbers').prop("checked") == true) {
     num = true;
   }
-  if ($('#symbols').prop("checked") == true) {
-    symb = true;
+  if ($('#csymbols').prop("checked") == true) {
+    csymb = true;
+  }
+  if ($('#ucsymbols').prop("checked") == true) {
+    ucsymb = true;
   }
   if ($('#similar').prop("checked") == true) {
     sim = true;
   }
-  $('#result').val(generatePassword(len, up, low, num, symb, sim));
+  $('#result').val(generatePassword(len, up, low, beginletter_on, num, csymb, ucsymb, sim));
 }
+
+
+
+var clipboard = new ClipboardJS('.btn');
+
+clipboard.on('success', function(e) {
+  $('#copy').popover('show');
+  setTimeout(function(){ 
+    $('#copy').popover('hide');
+ }, 700);
+});
+
+clipboard.on('error', function(e) {
+  alert("Copy failed")
+});

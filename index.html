@@ -55,23 +55,19 @@
                 <div class="row">
                     <div class="col-sm-8 col-md-7 py-4">
                         <h4 class="text-white">About SpockPassword</h4>
-                        <p class="text-muted">SpockPassword is Online Strong Password Generator to create random and secure passwords in ET level
+                        <p class="text-muted">SpockPassword is Online Strong Password Generator to create random and
+                            secure passwords in ET level
                             that impossible to crack!
-                            <br/> SpockPassword
+                            <br /> SpockPassword
                             <strong> Promise DOES NOT</strong> trace any data!</p>
                     </div>
                     <div class="col-sm-4 offset-md-1 py-4">
                         <h4 class="text-white">Contact</h4>
                         <ul class="list-unstyled">
                             <li>
-                                <a href="#" class="text-white">Follow on Twitter</a>
+                                <a href="https://kasonz.com/" target="_blank" class="text-white">Kasonz.com</a>
                             </li>
-                            <li>
-                                <a href="#" class="text-white">Like on Facebook</a>
-                            </li>
-                            <li>
-                                <a href="#" class="text-white">Email me</a>
-                            </li>
+                     
                         </ul>
                     </div>
                 </div>
@@ -84,8 +80,8 @@
                     <img src="/assets/img/spock-logo.svg" class="spock-logo mr-2" />
                     <img class="logo" src="/assets/img/logo-w.png" />
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader"
-                    aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
+                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
@@ -104,9 +100,25 @@
 
                 <div class="form-group row pb-1">
                     <label for="passwordLength" class="col-sm-3 col-form-label label-right">Password length</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="passwordLength" placeholder="Password length, default:16" value="16">
-                      
+                    <div class="col-sm-3 input-group">
+                        <input type="text" class="form-control" id="passwordLength" placeholder="Password length" value="16">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">Quick Setting</button>
+                            <div class="dropdown-menu quick">
+                                <a class="dropdown-item" href="#">Short: 4</a>
+                                <a class="dropdown-item" href="#">Short: 6</a>
+                                <a class="dropdown-item" href="#">Short: 8</a>
+                                <div role="separator" class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Strong: 12</a>
+                                <a class="dropdown-item" href="#">Strong: 16</a>
+                                <a class="dropdown-item" href="#">Strong: 18</a>
+                                <div role="separator" class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Extreme: 32</a>
+                                <a class="dropdown-item" href="#">Extreme: 64</a>
+                                <a class="dropdown-item" href="#">Extreme: 128</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -134,8 +146,8 @@
                     <div class="col-sm-3 label-right">Begins with a letter</div>
                     <div class="col-sm-9">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" checked id="lowercase">
-                            <label class="custom-control-label" for="lowercase">e.g. ABC···xyz</label>
+                            <input type="checkbox" class="custom-control-input" checked id="begin-letter">
+                            <label class="custom-control-label" for="begin-letter">e.g. ABC···xyz</label>
                         </div>
                     </div>
                 </div>
@@ -151,13 +163,24 @@
                     </div>
                 </div>
 
-
                 <div class="form-group row pb-1">
-                    <div class="col-sm-3 label-right">Symbols</div>
+                    <div class="col-sm-3 label-right">Common Symbols</div>
                     <div class="col-sm-9">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" checked id="symbols">
-                            <label class="custom-control-label" for="symbols">e.g. !@#$%^&*()/></label>
+                            <input type="checkbox" class="custom-control-input" checked id="csymbols">
+                            <label class="custom-control-label" for="csymbols"><code class="sym"> - _ = + ! @ # $ % ? &
+                                    * ( ) , <> ; : .</code></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row pb-1">
+                    <div class="col-sm-3 label-right">Uncommon Symbols</div>
+                    <div class="col-sm-9">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="ucsymbols">
+                            <label class="custom-control-label" for="ucsymbols"><code class="sym"> ' ` ~ ^ [ { ] } \ /
+                                    | " '</code></label>
                         </div>
                     </div>
                 </div>
@@ -187,9 +210,11 @@
                             <div class="input-group-prepend">
 
                             </div>
-                            <input type="text" class="form-control" id="result" placeholder="Password will appear here" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+                            <input type="text" class="form-control" id="result" placeholder="Password will appear here"
+                                aria-label="Large" aria-describedby="inputGroup-sizing-sm">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" data-clipboard-target="#result" id="copy" type="button">Copy</button>
+                                <button class="btn btn-outline-secondary" data-content="Copied!" data-clipboard-target="#result" data-placement="right"  id="copy"
+                                    type="button">Copy</button>
                             </div>
                         </div>
                     </div>
@@ -216,11 +241,13 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="/assets/js/jquery-3.3.1.min.js"></script>
-
+    <script src="/assets/js/popper.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <script src="/assets/js/particles.min.js"></script>
+    <script src="/assets/js/clipboard.min.js"></script>
+
     <script src="/assets/js/site.js"></script>
-    <script src="https://unpkg.com/clipboard@2.0.0/dist/clipboard.min.js"></script>
+
 
 </body>
 
