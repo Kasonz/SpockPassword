@@ -136,3 +136,10 @@ background: #2f3038;
   color: #000;
   font-weight: 400;
 }
+
+#time {
+  width:100%;
+  padding: 15px;
+  display: none;
+  background-color: rgba(243,156,18,.5)
+}

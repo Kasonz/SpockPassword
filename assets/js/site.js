@@ -1,6 +1,71 @@
 // A $( document ).ready() block.
+
+// global
+
+var bclick = true;
+
+// end
+
+
+
 $(document).ready(function () {
   new ClipboardJS('.btn');
+
+  // show times 
+
+
+
+  var passwordInput = document.getElementById("result");
+
+
+  // Code to render the time returned by HSIMP
+  var renderTime = function (time) {
+    // timeDiv.innerHTML = time || "";
+
+    if(!bclick){
+      console.log(time);
+
+      setTimeout(function () {
+        $("#time").html("Compter would take  " + time + " to crack it");
+      }, 200);
+    
+    
+
+   
+
+      $("#time").slideDown();
+      
+
+    }
+    else{
+
+    }
+   
+    bclick = true;
+
+  };
+
+  // Setup the HSIMP object
+  var attachTo = hsimp({
+    options: {
+      calculationsPerSecond: 10e9, // 10 billion calculations per second
+      good: 31557600e9, // 1 billion years
+      ok: 31557600e3 // 1 thousand years
+    },
+    outputTime: renderTime
+  });
+
+  // setup custom values for "instantly"/"forever"
+  hsimp.setDictionary({
+    "instantly": "Immediately",
+    "forever": "Aaaaaaaaaaaaaaaages",
+  });
+
+  // Run the HSIMP
+  attachTo(passwordInput);
+  // show times done
+
+
 });
 
 particlesJS("particles-js", {
@@ -170,6 +235,10 @@ function generatePassword(length, up_on, low_on, beginletter_on, num_on, csym_on
     password = "";
   }
 
+  if(characters.length==0){
+    return false;
+  }
+
   for (var j = 0; j < length; j++) {
     var index = Math.floor((Math.random() * characters.length) + 0);
     password = password + characters[index];
@@ -193,7 +262,7 @@ $('.quick a').click(function (e) {
   var thenum = text.match(/\d+$/)[0];
 
   $("#passwordLength").val(thenum);
-  
+
 });
 
 function newPass() {
@@ -202,8 +271,9 @@ function newPass() {
     low = false,
     num = false,
     csymb = false,
-    ucsymb=false,
+    ucsymb = false,
     sim = false;
+    beginletter_on = false;
   if ($('#uppercase').prop("checked") == true) {
     up = true;
   }
@@ -225,20 +295,39 @@ function newPass() {
   if ($('#similar').prop("checked") == true) {
     sim = true;
   }
-  $('#result').val(generatePassword(len, up, low, beginletter_on, num, csymb, ucsymb, sim));
+
+  $("#time").slideUp();
+
+  setTimeout(function () {
+    $("#result").click();
+  }, 200);
+
+
+  var password = generatePassword(len, up, low, beginletter_on, num, csymb, ucsymb, sim);
+
+  if(password){
+    $('#result').val(password);
+    bclick = false;
+  
+  }
+
+
+ 
+
+
 }
 
 
 
 var clipboard = new ClipboardJS('.btn');
 
-clipboard.on('success', function(e) {
+clipboard.on('success', function (e) {
   $('#copy').popover('show');
-  setTimeout(function(){ 
+  setTimeout(function () {
     $('#copy').popover('hide');
- }, 700);
+  }, 700);
 });
 
-clipboard.on('error', function(e) {
+clipboard.on('error', function (e) {
   alert("Copy failed")
 });
