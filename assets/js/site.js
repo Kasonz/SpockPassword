@@ -26,7 +26,7 @@ $(document).ready(function () {
       console.log(time);
 
       setTimeout(function () {
-        $("#time").html("Compter would take  " + time + " to crack it");
+        $("#time").html("A computer would take  " + time + " to crack it");
       }, 200);
     
     
